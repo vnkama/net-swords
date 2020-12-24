@@ -1,20 +1,24 @@
 #!/usr/bin/env python
+import pygame as pg
+
+from InitPygame import *
+
 
 import asyncio
 import socket
 import time
+from Game import *
 
-import pygame
 
 
-FPS = 100
-WIDTH, HEIGHT = 800, 400
+FPS = 60
+WIDTH, HEIGHT = MAIN_WND_WIDTH, MAIN_WND_HEIGHT
 
 
 class Ball:  # using a Sprite would be better
     def __init__(self):
-        # self.ball = pygame.image.load("intro_ball.gif")
-        self.ball = pygame.image.load("./img/ball.png")
+        # self.ball = pg.image.load("intro_ball.gif")
+        self.ball = pg.image.load("./img/ball.png")
         self.rect = self.ball.get_rect()
         self.speed = [3, 2]
 
@@ -32,7 +36,7 @@ class Ball:  # using a Sprite would be better
 def pygame_event_loop(event_loop, gui_queue):
     print('pygame_event_loop start')
     while True:
-        event = pygame.event.wait()
+        event = pg.event.wait()
         asyncio.run_coroutine_threadsafe(
                 gui_queue.put(event),
                 loop=event_loop,
@@ -41,7 +45,7 @@ def pygame_event_loop(event_loop, gui_queue):
     pass # эта строка не выполнится никогда, втч при закрытии приложения
 
 
-async def animation_loop(screen, player_command_queue, ball):
+async def update_game_loop(screen, player_command_queue, game, ball):
     black = 0, 0, 0
 
     current_time = 0
@@ -54,10 +58,12 @@ async def animation_loop(screen, player_command_queue, ball):
             speed = int(command['input_char'])
             ball.speed = [speed,speed]
 
-        ball.move()
-        screen.fill(black)
-        ball.draw(screen)
-        pygame.display.flip()
+        #ball.move()
+
+        screen.fill(MAIN_WND_BACKGROUND)
+        #ball.draw(screen)
+        game.draw(screen)
+        pg.display.flip()
 
 
 
@@ -65,10 +71,10 @@ async def gui_loop(gui_queue, ball):
     while True:
         event = await gui_queue.get()
 
-        if event.type == pygame.QUIT:
+        if event.type == pg.QUIT:
             break
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
+        elif event.type == pg.KEYDOWN:
+            if event.key == pg.K_SPACE:
                 if ball.speed == [0, 0]:
                     ball.speed = [2, 2]
                 else:
@@ -143,12 +149,16 @@ def main():
     # очередь команд клиентов
     clients_command_queue = asyncio.Queue()
 
-    pygame.init()
+    # pg.init()
+    # pg.font.init()
+    # pg.display.set_caption(MAIN_WND_TITLE)
+    #g_main_srf = pg.display.set_mode((WIDTH, HEIGHT))
 
-    pygame.display.set_caption("My game")
-    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    screen = g_main_srf
 
     ball = Ball()
+
+    Game_obj = Game()
 
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.bind(('', 9300))
@@ -170,7 +180,7 @@ def main():
     )
 
     # создадим задачу на аниммацию,
-    animation_task = asyncio.ensure_future(animation_loop(screen, clients_command_queue, ball))
+    update_game_task = asyncio.ensure_future(update_game_loop(screen, clients_command_queue, Game_obj, ball))
 
     # создадим задачу на аниммацию,
     event_task = asyncio.ensure_future(gui_loop(gui_queue, ball))
@@ -185,12 +195,12 @@ def main():
         pass
     finally:
         pygame_task.cancel()
-        animation_task.cancel()
+        update_game_task.cancel()
         event_task.cancel()
         server_task.cancel()
         print('Server closed')
 
-    pygame.quit()
+    pg.quit()
 
 
 if __name__ == "__main__":
