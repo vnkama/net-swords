@@ -44,9 +44,16 @@ MAIN_WND_WIDTH      = 1200          # 1400(в окне win)
 # размер игровой карты (НЕ экрана)
 MAP_SIZE_X_TILE = 50
 MAP_SIZE_Y_TILE = 50
-TILE_SIZE = 20      #px
+TILE_SIZE = 16      #px
 #MAP_SIZE_XY = (MAP_SIZE_X, MAP_SIZE_Y)
 #MAP_SIZE_RECT = pg.Rect(0, 0, MAP_SIZE_X, MAP_SIZE_Y)
+
+
+
+
+
+################################################
+
 
 
 THEME_RED_CLR                   = 0xFB0D1C
@@ -80,10 +87,14 @@ THEME_SELECT_BACKGROUND_HOVER_CLR   = THEME_BACKGROUND_HOVER_CLR
 THEME_SELECT_BORDER_CLR         = THEME_BORDER_CLR_HIGH
 THEME_SELECT_STRING_HEIGHT      = 22
 
+################################################
+MAP_BACKGROUND_CLR = 0x000000
+MAP_NET_CLR = THEME_DARK_GREY_CLR
 
-# THEME_WINDOW_BACKGROUND     = THEME_DARK_GREY_CLR
+PLAYER_1_CLR = THEME_RED_CLR
+PLAYER_2_CLR = THEME_BLUE_CLR
 
-
+################################################
 
 TOOL_WND_WIDTH       = 300
 TOOL_WND_RECT        = pg.Rect(MAIN_WND_WIDTH-TOOL_WND_WIDTH, 0, TOOL_WND_WIDTH, MAIN_WND_HEIGHT)   #left top w h

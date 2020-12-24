@@ -43,4 +43,8 @@ class Tile:
         self.Building = building
 
     def draw(self, surface):
-        surface.fill(self.background_color, self.rect)
+        pg.draw.rect(surface, MAP_NET_CLR, pg.Rect(self.rect.topleft,(2,2)))
+
+        if self.Building.type is not None:
+            self.Building.draw(surface, self.rect)
+
