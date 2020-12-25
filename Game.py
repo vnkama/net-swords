@@ -27,25 +27,39 @@ class Game:
         self.Player1 = Player({
             'user_name': 'Nicolas',
             'number': 1,
-            #'color': PLAYER_1_CLR,
+            'color': PLAYER_1_CLR,
         })
 
         self.Player2 = Player({
             'user_name': 'antibot',
             'number': 2,
-            #'color': PLAYER_2_CLR,
+            'color': PLAYER_2_CLR,
         })
 
         #==============
 
         bld = Baza({
             'player': 1,
-            'coord': (48, 25),
+            'coord': (25, 48),
+            'player_color': self.Player1.color
         })
 
         self.Tiles[bld.coord].setBuilding(bld)
         self.Buldings.append(bld)
         self.Player1.addBaza(bld)
+
+        #==============
+
+        bld = Baza({
+            'player': 2,
+            'coord': (35, 1),
+            'player_color': self.Player2.color
+        })
+
+        self.Tiles[bld.coord].setBuilding(bld)
+        self.Buldings.append(bld)
+        self.Player2.addBaza(bld)
+
 
         #==============
 

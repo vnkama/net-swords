@@ -1,3 +1,4 @@
+import pygame as pg
 from Building import *
 
 class Baza(Building):
@@ -7,7 +8,7 @@ class Baza(Building):
         super().__init__(params)
 
     def draw(self, surface, rect):
-        pass
-        #rect()
+        pg.draw.rect(surface, self.player_color, rect)
+
 
 
