@@ -18,7 +18,7 @@ WIDTH, HEIGHT = MAIN_WND_WIDTH, MAIN_WND_HEIGHT
 class Ball:  # using a Sprite would be better
     def __init__(self):
         # self.ball = pg.image.load("intro_ball.gif")
-        self.ball = pg.image.load("./img/ball.png")
+        self.ball = pg.image.load("./img/flag-red-16.png")
         self.rect = self.ball.get_rect()
         self.speed = [3, 2]
 
@@ -161,7 +161,7 @@ def main():
     Game_obj = Game()
 
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind(('', 9300))
+    server.bind(('', 9301))
     server.listen(8)
     server.setblocking(False)
 

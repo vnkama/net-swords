@@ -26,7 +26,15 @@ import pygame as pg     # использован pg.Rect
 
 # =================================================================================
 DRAW_FPS = 60
-UPDATE_FPS = 60
+UPDATE_FPS = 20
+
+# =================================================================================
+
+KNIGHT_SPEED = 2.0  # два тайла в секунду, погоризонтали
+
+
+
+
 
 
 
@@ -42,8 +50,11 @@ MAIN_WND_WIDTH      = 1200          # 1400(в окне win)
 
 
 # размер игровой карты (НЕ экрана)
-MAP_SIZE_X_TILE = 50
-MAP_SIZE_Y_TILE = 50
+MAP_SIZE_X = 50
+MAP_SIZE_Y = 50
+MAP_X_MAX_INDEX = MAP_SIZE_X - 1
+MAP_Y_MAX_INDEX = MAP_SIZE_Y - 1
+
 TILE_SIZE = 16      #px
 #MAP_SIZE_XY = (MAP_SIZE_X, MAP_SIZE_Y)
 #MAP_SIZE_RECT = pg.Rect(0, 0, MAP_SIZE_X, MAP_SIZE_Y)
@@ -55,13 +66,14 @@ TILE_SIZE = 16      #px
 ################################################
 
 
-
+THEME_BLACK_CLR                 = 0x090909
 THEME_RED_CLR                   = 0xFB0D1C
 THEME_GREEN_CLR                 = 0x2AC325
 THEME_BLUE_CLR                  = 0x426DF9
 THEME_DARK_GREY_CLR             = 0x282828
 THEME_MED_GREY_CLR              = 0x606060
 THEME_LIGHT_GREY_CLR            = 0xe7e7e7
+THEME_SWAMP_GREEN_CLR           = 0xACB78E
 
 THEME_BORDER_CLR_LOW            = THEME_MED_GREY_CLR
 THEME_BORDER_CLR_HIGH           = THEME_LIGHT_GREY_CLR
@@ -88,7 +100,7 @@ THEME_SELECT_BORDER_CLR         = THEME_BORDER_CLR_HIGH
 THEME_SELECT_STRING_HEIGHT      = 22
 
 ################################################
-MAP_BACKGROUND_CLR = 0x000000
+MAP_BACKGROUND_CLR = THEME_BLACK_CLR
 MAP_NET_CLR = THEME_DARK_GREY_CLR
 
 PLAYER_1_CLR = THEME_BLUE_CLR
